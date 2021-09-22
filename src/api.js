@@ -6,10 +6,9 @@ import EntityFactory from './data/entity-factory.data.js';
 import Repository from './data/repository.data.js';
 
 export default class Api {
-    constructor(url, token, version) {
+    constructor(url, token) {
         this.url = url;
-        this.client = createClient(url, token, version)
-        this.version = version;
+        this.client = createClient(url, token)
     }
 
     async _initialize() {
@@ -31,10 +30,6 @@ export default class Api {
             }
             options = options || {};
 
-            if (options.version === undefined) {
-                options.version = this.version;
-            }
-
             const definition = this.EntityDefinition.get(entityName);
 
             return new Repository(
@@ -52,8 +47,7 @@ export default class Api {
     defaultContext() {
         return {
             apiPath: `${this.url}/api`,
-            apiResourcePath: `${this.url}/api/v${this.version}`,
-            apiVersion: this.version,
+            apiResourcePath: `${this.url}/api`,
             authToken: {
                 access: this.client.token.access_token
             }

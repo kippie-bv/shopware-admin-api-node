@@ -2,8 +2,7 @@ import axios from 'axios';
 import Api from './api.js';
 export {default as Criteria} from './data/criteria.data.js';
 
-export async function createFromPasswordAndLogin(url, username, password, version) {
-    version = version || 1;
+export async function createFromPasswordAndLogin(url, username, password) {
     let res;
 
     try {
@@ -22,15 +21,14 @@ export async function createFromPasswordAndLogin(url, username, password, versio
         throw err;
     }
 
-    let api = new Api(url, res.data, version);
+    let api = new Api(url, res.data);
     await api._initialize();
 
     return api;
 };
 
 
-export async function createFromIntegration(url, id, secret, version) {
-    version = version || 1;
+export async function createFromIntegration(url, id, secret) {
     let res;
 
     try {
@@ -47,7 +45,7 @@ export async function createFromIntegration(url, id, secret, version) {
         throw err;
     }
 
-    let api = new Api(url, res.data, version);
+    let api = new Api(url, res.data);
     await api._initialize();
 
     return api;
